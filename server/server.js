@@ -24,19 +24,16 @@ io.on('connection', (socket) => {
     // sends to everyone else
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User Joined!'));
 
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('created message', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
+        callback('This is from the server.');
     });
 
     socket.on('disconnect', () => {
         console.log('User disconnected.')
     });
 });
-
-
-
-
 
 
 server.listen(port, () => {
